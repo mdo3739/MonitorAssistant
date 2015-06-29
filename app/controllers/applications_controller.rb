@@ -23,7 +23,14 @@ class ApplicationsController < ApplicationController
   end
 
   def update
-
+    @application = Application.find(params[:id])
+    if @application.update_attributes(app_params)
+      flash[:notice] = "Edit Sucessful"
+      redirect_to applications_path
+    else
+      flash[:error] = "DOES NOT COMPUTE"
+      render :edit
+    end
   end
 
   def show
@@ -31,7 +38,14 @@ class ApplicationsController < ApplicationController
   end
 
   def destroy
-
+    @application = Application.find(params[:id])
+    if @application.destroy
+      flash[:notice] = "Terminated"
+      redirect_to applications_path
+    else
+      flash[:error] = "Error Error"
+      redirect_to applications_path
+    end
   end
 
   private
