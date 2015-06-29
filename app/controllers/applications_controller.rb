@@ -8,7 +8,14 @@ class ApplicationsController < ApplicationController
   end
 
   def create
-
+    @application = current_user.applications.build(app_params)
+    if @application.save
+      flash[:notice] = "Success!"
+      redirect_to applications_path
+    else
+      flash[:error] = "No worky"
+      render :new
+    end
   end
 
   def edit
@@ -25,5 +32,11 @@ class ApplicationsController < ApplicationController
 
   def destroy
 
+  end
+
+  private
+
+  def app_params
+    params.require(:application).permit(:name, :user_id, :url)
   end
 end
