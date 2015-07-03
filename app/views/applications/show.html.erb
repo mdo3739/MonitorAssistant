@@ -1,2 +1,7 @@
 <h1><%= @application.name %></h1>
 <p><%= @application.url %></p>
+<p>
+  <% @events.each do |event| %>
+    <%= event[0] %>: <%= event[1].count %><br/>
+  <% end %>
+</p>
