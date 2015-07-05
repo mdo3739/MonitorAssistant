@@ -1,6 +1,6 @@
-class EventsController < ApplicationController
+class API::EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :verify_authenticity_token
   # GET /events
   # GET /events.json
   def index
@@ -25,6 +25,7 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     @event = Event.new(event_params)
+    #@application = Application.find_by(url: request.env['HTTP_ORIGIN'])
 
     respond_to do |format|
       if @event.save
