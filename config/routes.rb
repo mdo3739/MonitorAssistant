@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  resources :events, except: [:create]
   devise_for :users
   get 'welcome/index'
   root to: 'welcome#index'
   resources :applications
-  namespace :api, defaults: {format: :json} do
-    resources :events, only: [:create]
+  namespace :api do
+    resources :events#, only: [:create]
   end
+  match 'create_event', to: 'events#create', via: [:options]
 end

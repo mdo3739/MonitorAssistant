@@ -1,6 +1,14 @@
 class API::EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token
+  before_filter :set_access_control_headers
+
+  def set_access_control_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
+    headers['Access-Control-Allow-Headers'] = 'Content-Type'
+  end
+
   # GET /events
   # GET /events.json
   def index
@@ -24,16 +32,20 @@ class API::EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    @event = Event.new(event_params)
-    #@application = Application.find_by(url: request.env['HTTP_ORIGIN'])
-
-    respond_to do |format|
-      if @event.save
-        format.html { redirect_to @event, notice: 'Event was successfully created.' }
-        format.json { render :show, status: :created, location: @event }
-      else
-        format.html { render :new }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+    @application = Application.find_by(url: request.env['HTTP_ORIGIN'])
+    if @application == nil # if the application is not found by HTTP_ORIGIN, it means the incoming request is from an unregistered site
+      render json: "Unregistered application", status: :unprocessable_entity
+      return
+    else
+      @event = @application.events.build(event_params)
+      respond_to do |format|
+        if @event.save
+          format.html { redirect_to @event, notice: 'Event was successfully created.' }
+          format.json { render json: @event, status: :created }
+        else
+          format.html { render :new }
+          format.json { render json: @event.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -43,7 +55,7 @@ class API::EventsController < ApplicationController
   def update
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+        format.html { redirect_to [:api, @event], notice: 'Event was successfully updated.' }
         format.json { render :show, status: :ok, location: @event }
       else
         format.html { render :edit }
@@ -57,7 +69,7 @@ class API::EventsController < ApplicationController
   def destroy
     @event.destroy
     respond_to do |format|
-      format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
+      format.html { redirect_to api_events_url, notice: 'Event was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -70,6 +82,6 @@ class API::EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:application_id, :name)
+      params.require(:event).permit(:name)
     end
 end

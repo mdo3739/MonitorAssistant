@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'bootstrap-sass'  # handles css
 gem 'quiet_assets'    # hides asset pipeline logs
+gem 'pry'             # debugging tool
 gem 'devise'          # user authentication
 gem 'figaro', '1.0'   # handles sensitive data
 gem 'pundit'          # authorization

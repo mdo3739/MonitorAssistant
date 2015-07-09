@@ -1,3 +1,21 @@
+admin = User.new(
+  name: "Mike Dizzle",
+  email: 'admin@example.com',
+  password: 'helloworld'
+)
+admin.skip_confirmation!
+admin.save
+
+4.times do
+  user = User.new(
+    name: Faker::Name.name,
+    email: Faker::Internet.safe_email,
+    password: Faker::Lorem.characters(10)
+  )
+  user.skip_confirmation!
+  user.save
+end
+
 5.times do 
   name = Faker::App.name
   Application.create!(
