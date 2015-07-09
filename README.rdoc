@@ -1,6 +1,6 @@
 == README
 
-This is an app that can receive and record information coming in from my other apps.
+This is an app that can receive and record events happening in my other apps, and display the information on a graph
 
 Ruby 2.2.2
 
