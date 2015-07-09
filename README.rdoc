@@ -1,5 +1,7 @@
 == README
 
+This is an app that can receive and record information coming in from my other apps.
+
 Ruby 2.2.2
 
 Deployed app here:
