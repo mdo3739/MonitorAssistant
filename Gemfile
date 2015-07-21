@@ -7,8 +7,10 @@ gem 'devise'          # user authentication
 gem 'figaro', '1.0'   # handles sensitive data
 gem 'pundit'          # authorization
 gem 'puma'            # web server that allows multiple threads
-gem 'rack-cors', :require => 'rack/cors'
-
+gem 'rack-cors', :require => 'rack/cors'  # allows my other apps to post data onto this one
+gem 'chartkick'              # creates graphs of data (pie chart)
+gem 'groupdate', '2.0'    # creates line graphs over time
+gem 'pg'              # postgresql database
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.2'
 # Use SCSS for stylesheets
@@ -49,11 +51,9 @@ group :development, :test do
   gem 'spring'
 
   gem 'faker'        # creates fake data for seeds
-  gem 'sqlite3'       # Use sqlite3 as the database for Active Record
 end
 
 group :production do
   gem 'rails_12factor'
-  gem 'pg'
 end
 

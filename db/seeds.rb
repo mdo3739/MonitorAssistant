@@ -15,12 +15,13 @@ admin.save
   user.skip_confirmation!
   user.save
 end
-
+users = User.all
 5.times do 
   name = Faker::App.name
   Application.create!(
     name: name,
-    url: "www.#{name}.com"
+    url: "www.#{name}.com",
+    user: users.sample
   )
 end
 events = []
@@ -30,10 +31,12 @@ end
 50.times do
   Event.create!(
     name: events.sample,
-    application: Application.all.sample
+    application: Application.all.sample,
+    created_at: Faker::Time.backward(14)
   )
 end
 
-puts "#{Application.all.count} applications registered"
+puts "#{User.all.count} users created,"
+puts "#{Application.all.count} applications registered, and"
 puts "#{Event.all.count} events created out of"
 print "#{events.count} different type of events"
