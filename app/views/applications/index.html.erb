@@ -3,3 +3,5 @@
 <% @applications.each do |app| %>
   <%= link_to app.name, application_path(app) %> <%= link_to "edit", edit_application_path(app) %> <%= link_to "Delete", application_path(app), method: :delete %><br/>
 <% end %>
+
+<%= link_to "Register a new app", new_application_path, class: 'btn btn-success' %>

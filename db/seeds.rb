@@ -16,7 +16,7 @@ admin.save
   user.save
 end
 users = User.all
-5.times do 
+20.times do 
   name = Faker::App.name
   Application.create!(
     name: name,

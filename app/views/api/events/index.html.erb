@@ -2,12 +2,13 @@
 
 <h1>Listing Events</h1>
 
-<table>
+<table width="500">
   <thead>
     <tr>
       <th>Application</th>
       <th>Name</th>
-      <th colspan="3"></th>
+      <th>Created at</th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -16,14 +17,10 @@
       <tr>
         <td><%= event.application.name %></td>
         <td><%= event.name %></td>
-        <td><%= link_to 'Show', api_event_path(event) %></td>
+        <td><%= event.created_at %></td>
         <td><%= link_to 'Edit', edit_api_event_path(event) %></td>
         <td><%= link_to 'Destroy', api_event_path(event), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Event', new_api_event_path %>

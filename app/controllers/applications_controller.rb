@@ -1,14 +1,17 @@
 class ApplicationsController < ApplicationController
   def index
-    @applications = Application.all
+    @applications = current_user.applications
+    authorize @applications
   end
 
   def new
     @application = Application.new
+    authorize @application
   end
 
   def create
     @application = current_user.applications.build(app_params)
+    authorize @application
     if @application.save
       flash[:notice] = "Success!"
       redirect_to applications_path
@@ -20,10 +23,12 @@ class ApplicationsController < ApplicationController
 
   def edit
     @application = Application.find(params[:id])
+    authorize @application
   end
 
   def update
     @application = Application.find(params[:id])
+    authorize @application
     if @application.update_attributes(app_params)
       flash[:notice] = "Edit Sucessful"
       redirect_to applications_path
@@ -36,10 +41,12 @@ class ApplicationsController < ApplicationController
   def show
     @application = Application.find(params[:id])
     @events = @application.events.group_by(&:name)
+    authorize @application
   end
 
   def destroy
     @application = Application.find(params[:id])
+    authorize @application
     if @application.destroy
       flash[:notice] = "Terminated"
       redirect_to applications_path
